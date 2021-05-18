@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from "vue";
 export default Vue.extend({
   data() {
@@ -72,7 +72,7 @@ export default Vue.extend({
         }
       }
     },
-    cellStatus(col: number) {
+    cellStatus(col) {
       switch (col) {
         case 0:
           return "none";
@@ -86,7 +86,7 @@ export default Vue.extend({
           return "endP2";
       }
     },
-    derction(direction: number) {
+    derction(direction) {
       let ret = [0, 0];
       switch (direction) {
         case 1:
@@ -104,14 +104,14 @@ export default Vue.extend({
       }
       return ret;
     },
-    chainChange(position: any, chain: any, direction: any, player: number) {
+    chainChange(position, chain, direction, player) {
       let move = this.derction(direction);
       for (let i = 0; i < chain; i++) {
         this.fieldCells[position[0] + move[0] * i][position[1] + move[1] * i] =
           player * 2;
       }
     },
-    putCell(row: number, col: number, setnum: number) {
+    putCell(row, col, setnum) {
       let judges = [];
       if (this.fieldCells[row][col] != 0 || this.gameEnd) return;
       this.fieldCells[row].splice(col, 1, setnum);
@@ -132,7 +132,7 @@ export default Vue.extend({
       // console.log(judges);
       this.player *= -1;
     },
-    judge(row: number, col: number, direction: number, player: number) {
+    judge(row, col, direction, player) {
       let move = this.derction(direction);
       let moved = [0, 0];
       let edge = [row, col];
@@ -157,7 +157,7 @@ export default Vue.extend({
       }
       return [connectNum, edge, direction];
     },
-    isAbleCell(row: number, col: number) {
+    isAbleCell(row, col) {
       if (row < 0 || row > 9 || col < 0 || row > 9) return true;
       // console.log("OK");
       return false;
