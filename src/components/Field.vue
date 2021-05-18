@@ -25,20 +25,27 @@ export default Vue.extend({
   data() {
     return {
       fieldCells: [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       ],
       player: 1,
       gameEnd: false,
       actionMemory: [],
+      fieldWidth: 15,
+      fieldHeight: 15,
     };
   },
   computed: {
@@ -49,8 +56,8 @@ export default Vue.extend({
   },
   methods: {
     reset() {
-      for (let i = 0; i < 10; i++) {
-        for (let j = 0; j < 10; j++) {
+      for (let i = 0; i < this.fieldHeight; i++) {
+        for (let j = 0; j < this.fieldWidth; j++) {
           this.fieldCells[i].splice(j, 1, 0);
         }
       }
@@ -63,8 +70,8 @@ export default Vue.extend({
       this.player *= -1;
       if (this.gameEnd) {
         this.gameEnd = false;
-        for (let i = 0; i < 10; i++) {
-          for (let j = 0; j < 10; j++) {
+        for (let i = 0; i < this.fieldHeight; i++) {
+          for (let j = 0; j < this.fieldWidth; j++) {
             if (this.fieldCells[i][j] == -2)
               this.fieldCells[i].splice(j, 1, -1);
             if (this.fieldCells[i][j] == 2) this.fieldCells[i].splice(j, 1, 1);
@@ -158,7 +165,7 @@ export default Vue.extend({
       return [connectNum, edge, direction];
     },
     isAbleCell(row, col) {
-      if (row < 0 || row > 9 || col < 0 || row > 9) return true;
+      if (row < 0 || row >= this.fieldHeight || col < 0 || row >= this.fieldWidth) return true;
       // console.log("OK");
       return false;
     },
@@ -166,10 +173,22 @@ export default Vue.extend({
 });
 </script>
 
+<style>
+@media screen and (min-width: 600px) {
+  body {
+    width: 600px;
+    margin: 0 auto;
+  }
+  html {
+    background-color: rgb(34, 52, 70);
+  }
+}
+</style>
+
 <style scoped>
 .fieldContainer {
   height: calc(100vh - 64px);
-  padding-top: 150px;
+  padding-top: 120px;
   background-color: rgb(217, 223, 224);
 }
 .field {
@@ -193,10 +212,10 @@ export default Vue.extend({
 }
 .row {
   display: flex;
-  height: 10%;
+  height: 6.666%;
 }
 .cell {
-  width: 10%;
+  width: 6.666%;
   border-top: solid 1px;
   border-left: solid 1px;
 }
@@ -233,5 +252,14 @@ export default Vue.extend({
   background-color: paleturquoise;
   padding: 0 7px;
   border-radius: 12px;
+}
+@media screen and (min-width: 445px) {
+  .field {
+    width: 400px;
+    height: 400px;
+  }
+  .control{
+    width: 400px;
+  }
 }
 </style>
