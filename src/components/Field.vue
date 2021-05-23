@@ -146,7 +146,7 @@ export default Vue.extend({
       let connectNum = 1;
       for (let i = 1; i < 5; i++) {
         moved = [row + move[0] * i, col + move[1] * i];
-        if (this.isAbleCell(moved[0], moved[1])) break;
+        if (!this.isAbleCell(moved[0], moved[1])) break;
         // console.log("OK");
         if (this.fieldCells[moved[0]][moved[1]] != player) {
           break;
@@ -155,7 +155,7 @@ export default Vue.extend({
       }
       for (let i = 1; i < 5; i++) {
         moved = [row + move[0] * -i, col + move[1] * -i];
-        if (this.isAbleCell(moved[0], moved[1])) break;
+        if (!this.isAbleCell(moved[0], moved[1])) break;
         if (this.fieldCells[moved[0]][moved[1]] != player) {
           break;
         }
@@ -165,7 +165,13 @@ export default Vue.extend({
       return [connectNum, edge, direction];
     },
     isAbleCell(row, col) {
-      if (row < 0 || row >= this.fieldHeight || col < 0 || row >= this.fieldWidth) return true;
+      if (
+        row >= 0 &&
+        row < this.fieldHeight &&
+        col >= 0 &&
+        col < this.fieldWidth
+      )
+        return true;
       // console.log("OK");
       return false;
     },
@@ -258,7 +264,7 @@ export default Vue.extend({
     width: 400px;
     height: 400px;
   }
-  .control{
+  .control {
     width: 400px;
   }
 }
